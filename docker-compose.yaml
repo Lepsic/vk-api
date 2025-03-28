@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  api:
+    container_name: ${ADMIN_API_CONTAINER_NAME}
+    ports:
+      - ${ADMIN_EXPOSE_PORT}:5000
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile
+
+    env_file:
+      - .env
+    command: [
+      "poetry", "run", "uvicorn", "app:create_app",
+      "--host", "0.0.0.0",
+      "--port", '5000',
+    ]
+
+  migrations:
+    container_name: migration_${ADMIN_API_CONTAINER_NAME}
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile
+    env_file:
+      - .env
+    command: ["alembic", "upgrade", "head"]
+

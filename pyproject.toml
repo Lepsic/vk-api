@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "vk-api"
+version = "0.1.0"
+description = ""
+authors = ["lepsick <Lepsick2003@yandex.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+fastapi = "^0.115.6"
+pydantic = "^2.10.4"
+uvicorn = "^0.34.0"
+dependency-injector = "^4.44.0"
+psycopg2-binary = "^2.9.10"
+pydantic-settings = "^2.7.1"
+jsf = "^0.11.2"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.40"}
+alembic = "^1.14.0"
+asyncpg = "^0.30.0"
+pyjwt = "^2.10.1"
+fernet = "^1.0.1"
+cryptography = "^44.0.0"
+httpx = "^0.28.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
