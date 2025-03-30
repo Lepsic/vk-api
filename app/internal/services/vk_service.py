@@ -15,7 +15,7 @@ class VkUserService:
 			self,
 			cmd: models.app.vk_api.user_api.ReadUserInfoCommand,
 			api_token: models.vk_api_base.BaseVkApiModelRequest,
-	):
+	) -> models.app.vk_api.user_api.ResponseUserInfoClient:
 		self.vk_api_client.auth(auth_token=api_token)
 		return await self.vk_api_client.read_user_info(cmd=cmd)
 
