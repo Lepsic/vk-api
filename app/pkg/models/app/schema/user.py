@@ -27,7 +27,6 @@ class BaseUser(BaseModel):
 class CreateUserCommand(BaseUser):
 	login: str
 	password: typing.Union[pydantic.SecretStr, pydantic.SecretBytes]
-	username: str
 	status: UserStatus = UserStatus.ACTIVE
 	auth_token: pydantic.SecretStr
 
@@ -39,19 +38,19 @@ class CreateUserDbsCommand(CreateUserCommand):
 class User(BaseUser):
 	id: pydantic.UUID4
 	login: str
-	username: str
 	password: typing.Union[pydantic.SecretBytes, pydantic.SecretStr]
 	auth_token: pydantic.SecretStr
 	def to_jwt(self):
-		d = self.to_dict(exlcluded=["password"])
+		d = self.to_dict(exlcluded=["password"], show_secrets=True)
 		d["id"] = str(d["id"])
+		print(d["auth_token"])
 		return d
 
 
 class UserWithAccessToken(BaseUser):
 	id: pydantic.UUID4
 	login: str
-	username: str
+	auth_token: str
 	type: JwtType
 	exp: int
 

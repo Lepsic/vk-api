@@ -54,6 +54,13 @@ class AuthService:
 		except jwt.ExpiredSignatureError:
 			raise models.exceptions.auth.JwtExpired
 
+	def fetch_vk_api_token(self, token: pydantic.StrictStr) -> models.vk_api_base.BaseVkApiModelRequest:
+		user = self.auth(token=token)
+		return models.vk_api_base.BaseVkApiModelRequest(
+			token=user.auth_token,
+		)
+
+
 	@staticmethod
 	def decode(
 		token: pydantic.StrictStr
@@ -73,14 +80,13 @@ class AuthService:
 					**data
 				)
 			raise models.exceptions.auth.JwtIncorrect
-		except pydantic.ValidationError as e:
+		except pydantic.ValidationError:
 			raise models.exceptions.auth.JwtIncorrect
 
 	async def login(self, cmd: models.app.auth.AuthRequest) -> models.app.auth.AuthResponse:
 		user = await self.__user_service.read_by_login(cmd=cmd)
 		if cmd.password.get_secret_value() != self.__crypto_service.decrypt(secret_str=user.password):
 			raise models.exceptions.auth.CredentialsIncorrect
-
 		return models.app.auth.AuthResponse(
 			access_token=self.generate_access_token(user=user),
 			refresh_token=self.generate_refresh_token(user=user)

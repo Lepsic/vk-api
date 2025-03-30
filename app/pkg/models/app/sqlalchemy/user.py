@@ -15,6 +15,6 @@ class User(Base):
 	)
 	login = sqlalchemy.Column(sqlalchemy.String(65), unique=True, nullable=False)
 	password = sqlalchemy.Column(sqlalchemy.LargeBinary(), nullable=False)
-	vk_username = sqlalchemy.Column(sqlalchemy.String(65), unique=True, nullable=False)
+	auth_token = sqlalchemy.Column(sqlalchemy.String(500), unique=True, nullable=False)
 	status = sqlalchemy.Column(sqlalchemy.Enum(UserStatus))
 

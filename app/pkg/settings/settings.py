@@ -98,7 +98,6 @@ class Settings(_Settings):
     POSTGRES_AUTH: Postgresql
     JWT: Jwt
     SECRET: Secret
-    TRANSACTION: TransactionService
 
 
 

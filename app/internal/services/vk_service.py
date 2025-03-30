@@ -7,15 +7,33 @@ class VkUserService:
 	vk_api_client: UserExecutor
 
 	def __init__(
-		self,
+			self,
 	):
 		self.vk_api_client = vk_api_client_factory(cls=UserExecutor)
 
-
 	async def read_user_info(
-		self,
-		cmd: models.app.vk_api.user_api.ReadUserInfoCommand,
-		user: models.app.user_schema.User
+			self,
+			cmd: models.app.vk_api.user_api.ReadUserInfoCommand,
+			api_token: models.vk_api_base.BaseVkApiModelRequest,
 	):
-		self.vk_api_client.setup(auth_token=user.auth_token.get_secret_value())
+		self.vk_api_client.auth(auth_token=api_token)
 		return await self.vk_api_client.read_user_info(cmd=cmd)
+
+	async def read_wall_count(
+			self,
+			cmd: models.app.vk_api.user_api.ReadUserInfoCommand,
+			api_token: models.vk_api_base.BaseVkApiModelRequest,
+	):
+		user_info = await self.read_user_info(
+			cmd=models.app.vk_api.user_api.ReadUserInfoCommand(
+				user_id=cmd.user_id
+			),
+			api_token=api_token,
+		)
+
+		return await self.vk_api_client.read_user_walls(
+			cmd=models.app.vk_api.user_api.ReadWallsCommand(
+				owner_id=user_info.id,
+			)
+		)
+

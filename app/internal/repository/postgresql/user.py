@@ -28,7 +28,7 @@ class UserRepository(Repository):
 					models.app.user_sql.User
 				).filter(
 					sqlalchemy.and_(
-						models.app.user_sql.User.username == cmd.login,
+						models.app.user_sql.User.login == cmd.login,
 						models.app.user_sql.User.status == cmd.status
 					)
 				)

@@ -20,6 +20,6 @@ router = APIRouter(
 async def create_user(
 		cmd: models.app.user_schema.CreateUserCommand,
 		user_service: UserService = Depends(Provide[Services.user_service]),
-		_=Depends(jwt_secured)
+		# _=Depends(jwt_secured)
 ):
 	return await user_service.create(cmd=cmd)

@@ -14,7 +14,7 @@ __all__ = [
 logger = get_logger(__name__)
 
 
-def handle_api_exceptions(exc: BaseAPIException):
+def handle_api_exceptions(request, exc: BaseAPIException):
 
     logger.info(exc)
 

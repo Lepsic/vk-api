@@ -18,3 +18,12 @@ def jwt_secured(
 ) -> models.app.user_schema.User:
 	token = api_header_token
 	return auth_service.auth(token)
+
+
+@inject
+def get_vk_api_token(
+	api_header_token: str = Security(header),
+	auth_service: AuthService = Depends(Provide[Services.auth_service]),
+) -> models.vk_api_base.BaseVkApiModelRequest:
+	token = api_header_token
+	return auth_service.fetch_vk_api_token(token)

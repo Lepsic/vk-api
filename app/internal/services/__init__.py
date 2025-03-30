@@ -26,7 +26,6 @@ class Services(containers.DeclarativeContainer):
 
     user_service: UserService = providers.Factory(
         UserService,
-        transaction_client=clients.transaction_client,
         user_repository=repositories.user_repository,
         crypto_service=crypto_service,
     )
